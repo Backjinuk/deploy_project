@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="./data.js"></script>
+<script src="./deployment.js"></script>
+<style>
+    .modal{
+        position:absolute;
+        display:none;
+        justify-content: center;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal_body{
+            position:absolute;
+            top:50%; 
+            width:50%;   
+            padding:10px;  
+            text-align: center;
+            background-color: rgb(255,255,255); 
+            border-radius:10px; 
+            box-shadow:0 2px 3px 0 rgba(34,36,38,0.15);
+            transform:translateY(-50%);
+    }
+</style>
+
+<body>
+    
+    <div style="display: flex;align-items: center;justify-content: center;width: 100%;height: 100%; flex-direction: column; padding: 23px;">
+        <h1>경로 변환 사이트</h1>
+        <div class="fileName" style="font-size: 22px; font-weight: bold;"></div>
+        <span style=" color: red; ">*위의 이름으로 파일을 만들어 주세요</span>
+        
+        <table class="table  table-hover" style="width: 80%;margin-top: 20px;border: 1px solid #00000047;">
+            <colgroup>
+                <col width="20%"/>
+                <col width="80%"/>
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th style="font-size: 18px;">사이트 목록<br>
+                        <input class="btn btn-primary btn-open-modal" value="경로 등록하기" style="width: 100%; height: 8vh;"/>
+                    </th>
+                    <th>
+                        <select class="form-select basePathValue" aria-label="Default select example"></select>
+                    </th>
+                </tr>
+                <tr>
+                    <th style="font-size: 18px;">변환하는값 <br>
+                        <input class="btn btn-info change" type="button" value="변환"style="width: 100%; height: 8vh;"/> 
+                    </th>
+                    <th>
+                        <div class="form-floating">
+                            <textarea class="form-control transfor" placeholder="Leave a comment here" id="transfor" style="height: 100px"></textarea>
+                            <label for="transfor">변환하는값</label>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th style="font-size: 18px;">백업용 <br>
+                        <input class="btn btn-secondary  copy1" type="button" value="복사" style="width: 100%; height: 8vh;"/> 
+                    </th>
+                    <th>
+                        <div class="form-floating">
+                            <textarea class="form-control returnValue1" placeholder="Leave a comment here" id="returnValue1" style="height: 100px"></textarea>
+                            <label for="returnValue1">백업용</label>
+                        </div>
+                    </th>
+                </tr> 
+                <tr>
+                    <th style="font-size: 18px;">배포용 <br>
+                        <input class="btn btn-secondary  copy2" type="button" value="복사" style="width: 100%; height: 8vh;"/> 
+                    </th>
+                    <th>
+                        <div class="form-floating">
+                            <textarea class="form-control returnValue2" placeholder="Leave a comment here" id="returnValue2" style="height: 100px"></textarea>
+                            <label for="returnValue2">배포용</label>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th style="font-size: 18px;">원복용 <br>
+                        <input class="btn btn-secondary  copy3" type="button" value="복사" style="width: 100%; height: 8vh;"/> 
+                    </th>
+                    <th>
+                        <div class="form-floating">
+                            <textarea class="form-control returnValue3" placeholder="Leave a comment here" id="returnValue3" style="height: 100px"></textarea>
+                            <label for="returnValue3">원복용</label>
+                        </div>
+                    </th>
+                </tr> 
+            </tbody>
+        </table>
+
+        <div class="modal">
+            <div class="modal_body">
+                <form id="saveProject">
+                    <table class="table  table-hover">
+                        <tr>
+                            <th class="deployText">
+                                <div style="margin-top: 10%;">
+                                    프로잭트<br> 이름</th>
+                                </div>
+                            <th style="width: 80%;">
+                                <div class="form-floating" style="margin-bottom: 10px;">
+                                    <input name="projectName" type="text" class="form-control" placeholder="Leave a comment here"/>
+                                    <label for="returnValue3" style="font-size : 10px;">프로잭트 이름</label>
+                                </div>
+                                <div class="form-floating" style="margin-bottom: 10px;">
+                                    <input name="homePath" type="text" class="form-control" placeholder="Leave a comment here"/>
+                                    <label for="returnValue3" style="font-size : 10px;">운영사이트 homePath</label>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="deployText">
+                                <div style="margin-top: 10%;">
+                                    JAVA<br> 파일</th>
+                                </div>
+                            <th style="width: 80%;">
+                                <div class="form-floating" style="margin-bottom: 10px;">
+                                    <input name="java_old" type="text" class="form-control" placeholder="Leave a comment here"/>
+                                    <label for="returnValue3" style="font-size : 10px;">로컬프로젝트 경로</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input name="java_new" type="text" class="form-control" placeholder="Leave a comment here"/>
+                                    <label for="returnValue3" style="font-size : 10px;">운영사이트 경로</label>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="deployText">
+                                <div style="margin-top: 10%;">
+                                    XML<br> 파일</th>
+                                </div>
+                            <th style="width: 80%;">
+                                <div class="form-floating" style="margin-bottom: 10px;">
+                                    <input name="xml_old" type="text" class="form-control" placeholder="Leave a comment here"/>
+                                    <label for="returnValue3" style="font-size : 10px;">로컬프로젝트 경로</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input name="xml_new" type="text" class="form-control" placeholder="Leave a comment here"/>
+                                    <label for="returnValue3" style="font-size : 10px;">운영사이트 경로</label>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="deployText">
+                                <div style="margin-top: 10%;">
+                                    JSP<br> 파일</th>
+                                </div>
+                            <th style="width: 80%;">
+                                <div class="form-floating" style="margin-bottom: 10px;">
+                                    <input name="jsp_old" type="text" class="form-control" placeholder="Leave a comment here"/>
+                                    <label for="returnValue3" style="font-size : 10px;">로컬프로젝트 경로</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input name="jsp_new" type="text" class="form-control" placeholder="Leave a comment here"/>
+                                    <label for="returnValue3" style="font-size : 10px;">운영사이트 경로</label>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="deployText">
+                                <div style="margin-top: 10%;">
+                                    SCRIPT<br> 파일</th>
+                                </div>                                    
+                            <th style="width: 80%;">
+                                <div class="form-floating" style="margin-bottom: 10px;">
+                                    <input name="script_old" type="text" class="form-control" placeholder="Leave a comment here"/>
+                                    <label for="returnValue3" style="font-size : 10px;">로컬프로젝트 경로</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input name="script_new" type="text" class="form-control" placeholder="Leave a comment here"/>
+                                    <label for="returnValue3" style="font-size : 10px;">운영사이트 경로</label>
+                                </div>
+                            </th>
+                        </tr>
+
+                    </table>
+                </form>
+                <div style="display: flex; justify-content: flex-end;">
+                    <input class="btn btn-primary saveProject" type="button" value="저장" style="margin-right: 10px; width: auto;"/> 
+                    <input class="btn btn-danger close" type="button" value="닫기" style="margin: 0; width: auto;"/> 
+                </div>
+            </div>
+        </div>
+
+
+</body>
+</html>
+
+<script>
+    $(document).ready( async function(){
+
+        $(".copy1").on("click", function(){
+            var returnValue = $("#returnValue1")
+            returnValue.select();
+            document.execCommand("copy");
+        })
+
+        $(".copy2").on("click", function(){
+            var returnValue = $("#returnValue2")
+            returnValue.select();
+            document.execCommand("copy");
+        })
+
+        $(".copy3").on("click", function(){
+            var returnValue = $("#returnValue3")
+            returnValue.select();
+            document.execCommand("copy");
+        })
+
+        //모달창
+        const modal = document.querySelector('.modal');
+        const btnOpenModal = document.querySelector('.btn-open-modal');
+        const close = document.querySelector('.close');
+
+        btnOpenModal.addEventListener("click", ()=>{
+            modal.style.display="flex";
+        });
+ 
+        close.addEventListener("click", ()=>{
+            modal.style.display="none";
+        });
+    });
+</script>
